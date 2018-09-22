@@ -10,7 +10,7 @@ h2  {
     margin: 5%;
     width: 90%;
     height: 90%;
-    min-height: 750px;
+    min-height: 700px;
     min-width: 800px;
 }
 
@@ -18,18 +18,22 @@ h2  {
     border-style: groove;
     border-radius: 2px;
     color:grey;
-    margin: 5%;
+    margin-left: 5%;
     width: 90%;
     height: 90%;
     min-height: 600px;
     min-width: 650px;
 }
 
-input[type=text]:focus {
+.inputForm {
+    text-align: center;
+}
+
+input:focus {
     background-color: lightblue;
 }
 
-input[type=text], select {
+input, select {
     width: 40%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -37,4 +41,26 @@ input[type=text], select {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+}
+
+button {
+    text-align: center;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%; 
+}
+
+td, th {
+    border: 2px solid #dddddd;
+    text-align: right;
+    padding: 8px;
 }
