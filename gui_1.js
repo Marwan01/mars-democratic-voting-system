@@ -1,5 +1,5 @@
 var text
-var candidates = ["Ali", "Ahmed", "Omar"];
+var candidates = [];
 var votes = [1, 3, 10]
 
 $(document).ready( () => {
@@ -11,15 +11,9 @@ $(document).ready( () => {
         else if (this.id == 'deleteButton') {
             var candidateName = $("#inputBox").val();
             deleteCandidate(candidateName);
-            $('#inputBox').val("");
         }
      });
 } );
-
-
-
-var container = $("inputBox");
-$("table").append("<tr><td>candiate one hardcoded yaay</td></tr>")
 
 
 
@@ -49,40 +43,23 @@ function addCandidate(candidate) {
             console.log("candidate: "+ candidate + " has been added.")
             $('#inputBox').val("");
         }          
-    }
+    }        
+}
 
+function deleteCandidate(candidate) {
 
-
-
-
-
-
-
-
-
-
-
-
-    // var found = true;
-    // for(i = 0; i < candidates.length; i++ ) {
-    //     if(candidate == candidates[i]) {
-    //         found = true;
-    //         var userResponse = prompt(candidate + " already exists in the list. Would you like to reset the vote counts? enter y for yes or anything else to cancel");
-    //         if(userResponse === "y") {
-    //             votes[i] = 0;
-    //         }
-            
-    //     }
-    //     else {
-    //         found = false;
-    //     }
-    // }      
-    // if(candidate !== "" && !found) {
-    //     candidates.push(candidate)
-    //     $("table").append("<tr><td>" +candidate+ "</td></tr>")
-    //     console.log("candidate: "+ candidate + " has been added.")
-    //     $('#inputBox').val("");
-    // }          
+    if(candidates.includes(candidate)) {
+        var candidateIndex = candidates.indexOf(candidate);
+        candidates.splice(candidateIndex, 1);
+        document.getElementById("candidatesTable").deleteRow(candidateIndex);
+        console.log("candidate: "+ candidate + " has been removed.")
+        $('#inputBox').val("");
+    }  
+    else {
+        console.log("candidate not found")
+        alert("candidate " + candidate + " was not found in the list.")
+        $('#inputBox').val("");
+    }      
 }
 
 function getUserInput() {
