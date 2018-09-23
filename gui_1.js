@@ -12,11 +12,18 @@ $(document).ready( () => {
             var candidateName = $("#inputBox").val();
             deleteCandidate(candidateName);
         }
-    $("#candidatesTable tbody tr").live('click', function ()
-    {
-        $('#candidatesTable table td').eq(0).text(candidateName);
-    });
-} );
+    $('#candidatesTable tbody tr td').click( function () {
+        var candidateName = $('#candidatesTable tbody tr td').text();
+        candidates.forEach(function(c) {
+            if(candidateName === c) {
+
+                votes[candidates.indexOf(candidateName)] = votes[candidates.indexOf(candidateName)]+ 1;
+                console.log(candidates.indexOf(candidateName))
+            }
+        })
+    })
+});
+});
 
 function addCandidate(candidate) {
 
@@ -30,6 +37,7 @@ function addCandidate(candidate) {
     else {
         if(candidate !== "") {
             candidates.push(candidate)
+            votes.push(0)
             $("table").append("<tr><td>" +candidate+ "</td></tr>")
             console.log("candidate: "+ candidate + " has been added.")
             $('#inputBox').val("");
