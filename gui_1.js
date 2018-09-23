@@ -1,6 +1,6 @@
 var text
 var candidates = [];
-var votes = [1, 3, 10]
+var votes = []
 
 $(document).ready( () => {
     $('#addButton, #deleteButton').click(function () {
@@ -12,7 +12,10 @@ $(document).ready( () => {
             var candidateName = $("#inputBox").val();
             deleteCandidate(candidateName);
         }
-     });
+    $("#candidatesTable tbody tr").live('click', function ()
+    {
+        $('#candidatesTable table td').eq(0).text(candidateName);
+    });
 } );
 
 function addCandidate(candidate) {
