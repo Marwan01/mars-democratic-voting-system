@@ -15,18 +15,6 @@ $(document).ready( () => {
      });
 } );
 
-
-
-
-function performRotation(onElement)
-{
-	//alert("You clicked me!");
-	
-	onElement.css("transform", "rotate(90deg)");
-	
-
-}
-
 function addCandidate(candidate) {
 
     if(candidates.includes(candidate)) {
@@ -62,16 +50,12 @@ function deleteCandidate(candidate) {
     }      
 }
 
-function getUserInput() {
-    if($("#addButton").click())
-    var candidateName = $("#inputBox").val();
-    return candidateName
-}
+function performRotation(onElement)
+{
+	//alert("You clicked me!");
+	
+	onElement.css("transform", "rotate(90deg)");
+	
 
-function save() {
-    
-    
-    $("#addButton").click();
 }
-
 
