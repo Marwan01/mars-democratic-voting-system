@@ -1,6 +1,8 @@
 var text
 var candidates = [];
 var votes = []
+var voteCount = 0;
+
 
 $(document).ready( () => {
     $('#addButton, #deleteButton').click(function () {
@@ -12,21 +14,36 @@ $(document).ready( () => {
             var candidateName = $("#inputBox").val();
             deleteCandidate(candidateName);
         }
-    $('#candidatesTable tbody tr td').click( function () {
-        var candidateName = $('#candidatesTable tbody tr td').text();
-        candidates.forEach(function(c) {
-            if(candidateName === c) {
-
-                votes[candidates.indexOf(candidateName)] = votes[candidates.indexOf(candidateName)]+ 1;
-                console.log(candidates.indexOf(candidateName))
-            }
-        })
-    })
+    // for(rownum = 0 ; rownum < candidates.length ; rownum++) {
+    //     var e = document.getElementById(rownum)
+    //     $(e).click( () => {
+    //                 console.log("clicked on row" + rownum)
+    //     })
+    // }
+    // $( "td" ).each(function( index ) {
+    //     $(this).on("click", function(){
+    //         // For the boolean value
+    //         var boolKey = $(this).data('selected');
+    //         // For the mammal value
+    //         var mammalKey = $(this).attr('id'); 
+    //     });
+    //     console.log( index + ": " + $( this ).text() );
+    //   });
+    });
 });
-});
 
+var count=0;
+$("td").each(function()   {
+    var num = Number($(this).text());
+      if (num>0)
+        count++;
+       });
+       alert("There were"  + count + "positives in bold!");
+
+$("table").append('<tr><td id="row0">happy</td></tr>');
+
+var id = 0 ;
 function addCandidate(candidate) {
-
     if(candidates.includes(candidate)) {
         var userResponse = prompt(candidate + " already exists in the list. Would you like to reset the vote counts? enter y for yes or anything else to cancel");
         if(userResponse === "y") {
@@ -38,7 +55,7 @@ function addCandidate(candidate) {
         if(candidate !== "") {
             candidates.push(candidate)
             votes.push(0)
-            $("table").append("<tr><td>" +candidate+ "</td></tr>")
+            $("table").append("<tr><td id=\"" + id++ + "\">" +candidate+ "</td></tr>")
             console.log("candidate: "+ candidate + " has been added.")
             $('#inputBox').val("");
         }          
@@ -69,4 +86,3 @@ function performRotation(onElement)
 	
 
 }
-
