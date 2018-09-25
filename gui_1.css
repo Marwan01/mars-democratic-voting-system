@@ -1,6 +1,6 @@
 h2  {
     text-align: center;
-    color: red;
+    color: darkgoldenrod;
 }
 
 .outerBox {
@@ -62,7 +62,7 @@ table {
 td {
     border: 1px solid #dddddd;
     text-align: left;
+    color: black;
     padding: 8px;
-    /* width: 100px;
-    background-color: plum; */
+    white-space:nowrap;
 }

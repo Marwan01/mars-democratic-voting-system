@@ -24,6 +24,8 @@ $(document).ready( () => {
      });
 } );
 
+// addcandidate takes in a candidate name which will be added to the table in view, the candidate array, and 
+// will be able to be voted for. this function does not return anything.
 function addCandidate(candidate) {
     //Check if the candidates already exists
     if(candidates.includes(candidate)) {
@@ -31,9 +33,11 @@ function addCandidate(candidate) {
         var userResponse = prompt(candidate + " already exists in the list. Would you like to reset the vote counts? enter y for yes or anything else to cancel");
         // if the candidates needs to be reset its votes do it.
         if(userResponse === "y") {
-            voteCount -= votes[candidates.indexOf(candidate)];
-            votes[candidates.indexOf(candidate)]=0;
-            updateCss();
+            voteCount -= votes[candidates.indexOf(candidate)]; // decrement the total vote count by the amount of votes the candidate had before resetting
+            votes[candidates.indexOf(candidate)]=0; // reset the vote count to 0
+            console.log("votes for candidate: " + candidate + " has been reset to 0");
+            updateCss(); // update the css since this impacts the rest of the candidate's bars
+            $('#inputBox').val("");
         }
     }
     else {
@@ -56,19 +60,22 @@ function addCandidate(candidate) {
     }        
 }
 
+// deleteCandidate takes in a string representing the name of the candidate to be deleted.
+// it returns nothing, and performs the deletion of the candidate from the view
+// taking into account resetting the votes and updating the total vote counts.
 function deleteCandidate(candidate) {
     //check if candidates is in the array 
     if(candidates.includes(candidate)) {
-        //get candidate candidateCount
-        var candidateIndex = candidates.indexOf(candidate);
+        // var to hold the index of the found candidate
+        var candidateIndex = candidates.indexOf(candidate); 
         //remove candidate from array
-        voteCount = voteCount - votes[candidateIndex]
-        candidates.splice(candidateIndex, 1);
-        votes[candidateIndex] = 0;
+        voteCount = voteCount - votes[candidateIndex] // update total vote count by removing the old registered votes from the total.
+        // candidates.splice(candidateIndex, 1);
+        votes[candidateIndex] = 0; // set the votes for the deleted candidate to 0
         //delete html row
         document.getElementById("candidatesTable").deleteRow(candidateIndex);
-        updateCss();
         console.log("candidate: "+ candidate + " has been removed.")
+        updateCss(); // update the css after performing a deletion since it will impact the votes
         $('#inputBox').val("");
     }  
     else {
@@ -79,23 +86,26 @@ function deleteCandidate(candidate) {
     }      
 }
 
-function vote(e) {
-    // console.log(candidateCount)
-    // console.log(votes[candidateCount-1])
-    console.log(e.id)
-    var candId = e.id 
-    votes[candId]++;
-    voteCount++;
-    console.log(votes)
-    updateCss();
+// vote function takes in one argument denoting the clicked table element (td) and returns nothing.
+// it updates the votes array for the corresponding candidates.
+function vote(candidateId) {
+    var candId = candidateId.id // get the id number of the selected/clicked td
+    votes[candId]++; // increment the votes of the corresponding candidate'index
+    voteCount++; // increment total vote count
+    updateCss(); // update the css every time the vote function gets called 
 }
 
+// this function doesn't take any argument nor return anything.
+// this function updates the css of ALL the elements of the table 
+// simultaneously.
 function updateCss() {
     for (var i = 0; i < candidates.length; i++) {   
-
-    var newd = (votes[i] / voteCount )*100;
-    newd = newd + '%';
-    $('#'+i).children().css('width',newd);
-    $('#'+i).children().css('background-color','red');
+        var percentOfVotes = (votes[i] / voteCount )*100; // new dimention of the width that the div contained in the td should be to reflect coloring/voting
+        console.log("Now, " + candidates[i] + " has: " + percentOfVotes + "% of the votes")
+        percentOfVotes = percentOfVotes + '%'; // add % to the string to indicate measure in % in css
+        $('#'+i).children().css('width',percentOfVotes); // update the css of the div (child) of the td while looping over the indexes.
+        $('#'+i).children().css('background-color','plum'); // set the color of the voted for candidate to plum
     }
+    console.log("--------------------------")
+
 }
