@@ -56,11 +56,13 @@ button {
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
-    width: 100%; 
+    width: 100%;
 }
 
-td, th {
-    border: 2px solid #dddddd;
-    text-align: right;
+td {
+    border: 1px solid #dddddd;
+    text-align: left;
     padding: 8px;
+    /* width: 100px;
+    background-color: plum; */
 }

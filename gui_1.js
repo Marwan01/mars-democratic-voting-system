@@ -1,88 +1,101 @@
-var text
-var candidates = [];
-var votes = []
-var voteCount = 0;
-
+ var candidates = []; // store names of candidates
+var votes = [] // keep track of the votes of every candidate
+var voteCount = 0; // keep track of total num of votes
+var candidateCount = 0; // keep count of table element indexes (also num of candidates)
 
 $(document).ready( () => {
+    //check if the addButton or delete button is clicked
     $('#addButton, #deleteButton').click(function () {
+        //if the addbutton is clicked
         if (this.id == 'addButton') {
+            //get the canidantes name 
             var candidateName = $("#inputBox").val();
+            //add candidates name to the array list
             addCandidate(candidateName);
         }
-        else if (this.id == 'deleteButton') {
+        //if the delete button is clicked
+        else if (this.id == 'deleteButton') {            
+            //get the canidantes name 
             var candidateName = $("#inputBox").val();
+            //delete the candidate form the array
             deleteCandidate(candidateName);
         }
-    // for(rownum = 0 ; rownum < candidates.length ; rownum++) {
-    //     var e = document.getElementById(rownum)
-    //     $(e).click( () => {
-    //                 console.log("clicked on row" + rownum)
-    //     })
-    // }
-    // $( "td" ).each(function( index ) {
-    //     $(this).on("click", function(){
-    //         // For the boolean value
-    //         var boolKey = $(this).data('selected');
-    //         // For the mammal value
-    //         var mammalKey = $(this).attr('id'); 
-    //     });
-    //     console.log( index + ": " + $( this ).text() );
-    //   });
-    });
-});
+        //get the row that was clicked
+     });
+} );
 
-var count=0;
-$("td").each(function()   {
-    var num = Number($(this).text());
-      if (num>0)
-        count++;
-       });
-       alert("There were"  + count + "positives in bold!");
-
-$("table").append('<tr><td id="row0">happy</td></tr>');
-
-var id = 0 ;
 function addCandidate(candidate) {
+    //Check if the candidates already exists
     if(candidates.includes(candidate)) {
+        //create pop up and get user input
         var userResponse = prompt(candidate + " already exists in the list. Would you like to reset the vote counts? enter y for yes or anything else to cancel");
+        // if the candidates needs to be reset its votes do it.
         if(userResponse === "y") {
-            votes[i] = 0;
-            // to work on later
+            voteCount -= votes[candidates.indexOf(candidate)];
+            votes[candidates.indexOf(candidate)]=0;
+            updateCss();
         }
     }
     else {
+        //Check if candidates is not of valid input
         if(candidate !== "") {
+            //add candidate to array list
             candidates.push(candidate)
+            // add a cell in the votes array for the freshly added candidate, and set it to 0, 0 votes for this new candidate.
             votes.push(0)
-            $("table").append("<tr><td id=\"" + id++ + "\">" +candidate+ "</td></tr>")
+            // add table element with variable id to be manipulated to select elements later.
+            $("table").append("<tr><td id=\"" + candidateCount + "\"> <div>" +candidate+ "</div></td></tr>")
             console.log("candidate: "+ candidate + " has been added.")
-            $('#inputBox').val("");
-        }          
+            $('#inputBox').val(""); // empty out the input box
+            $("#" + candidateCount).click( function() {  // call the vote function once an already added cell is clicked.
+                    vote(this)
+                });
+                candidateCount++; // increment num of candidates
+        }
+        
     }        
 }
 
 function deleteCandidate(candidate) {
-
+    //check if candidates is in the array 
     if(candidates.includes(candidate)) {
+        //get candidate candidateCount
         var candidateIndex = candidates.indexOf(candidate);
+        //remove candidate from array
+        voteCount = voteCount - votes[candidateIndex]
         candidates.splice(candidateIndex, 1);
+        votes[candidateIndex] = 0;
+        //delete html row
         document.getElementById("candidatesTable").deleteRow(candidateIndex);
+        updateCss();
         console.log("candidate: "+ candidate + " has been removed.")
         $('#inputBox').val("");
     }  
     else {
+        //candidate is not in the array 
         console.log("candidate not found")
         alert("candidate " + candidate + " was not found in the list.")
         $('#inputBox').val("");
     }      
 }
 
-function performRotation(onElement)
-{
-	//alert("You clicked me!");
-	
-	onElement.css("transform", "rotate(90deg)");
-	
+function vote(e) {
+    // console.log(candidateCount)
+    // console.log(votes[candidateCount-1])
+    console.log(e.id)
+    var candId = e.id 
+    votes[candId]++;
+    voteCount++;
+    console.log(votes)
+    updateCss();
+}
 
+function updateCss() {
+    for (var i = 0; i < candidates.length; i++) {   
+
+    var newd = (votes[i] / voteCount )*100;
+    newd = newd + '%';
+    $('#'+i).children().css('width',newd);
+    $('#'+i).children().css('background-color','red');
+    }
 }
