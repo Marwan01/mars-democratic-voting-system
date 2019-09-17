@@ -32,3 +32,6 @@ when doing a callback. it is just an abbreviation.
 I didn't put semi-colon in the end of every line since I realized it 
 compiles and works fine even without it.
 
+ <strong>Screenshot:</strong>
+ <br>
+![Screenshot](./pic.png)
